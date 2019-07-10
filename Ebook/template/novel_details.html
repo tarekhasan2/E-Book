@@ -1,0 +1,59 @@
+
+
+
+
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="container">
+
+	<div class="row">
+			<div class="col-3 mt-5">
+							{% if item.image %}
+							<div class="novel_image"><img src="{{ item.image.url }}" class="img-fluid" /></div>
+							{% endif %}
+			</div>
+						<div class="col-4 mt-5">
+								<h3><h2>{{ item.title }}</h2></h3>
+							
+								<p>{{ item.timestamp }}</p>
+								{% if item.draft %}
+									<h4>Draft</h4>
+								{%else%}
+									<h4>Published</h4>
+								{% endif%}
+								
+						</div>
+	</div>
+	<div class="row">
+		<div class="col-8 mt-5">
+			
+			<h3 class="pt-3">{{ item.get_markdown }}</h3>
+		</br>
+
+			<h1 style="text-align: bold;">Table of Content</h1>
+			<br>
+	
+			{% for chapter in chapters %}
+				<div >
+					<a href="{% url 'chapters:details' id=chapter.id %}"><button type="button" class="btn-group btn-primary btn-lg btn-block" style="background-color: #7777; color: #000000">{{ chapter.title}}</button></a>
+					<hr>
+				</div>
+				</br>
+		
+			{% endfor %}
+		</div>
+		<div class="col-3 mt-5 ml-auto">
+			<h3> {{ item.copyringt }}</h3>
+		</div>
+	</div>
+
+
+
+</div>
+
+
+
+
+{% endblock content %}

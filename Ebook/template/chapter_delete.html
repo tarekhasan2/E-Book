@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+
+		<div class="col-6 mr-auto ml-auto sm-2 md-4">
+			<div>
+				<h2 class="py-3">Delete This Chapter?</h2>
+				<p>If you're unsure, it's better to unpublish your part. Unpublished parts can only be seen by you, so they don't get any new reads, votes, or comments.</p>
+				<form action="" method="POST"> {% csrf_token %}
+					<input type="submit" name="delete" value="Delete" />
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

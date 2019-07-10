@@ -1,0 +1,78 @@
+
+
+
+
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block head_extra %}
+	{{ form.media}}
+{% endblock head_extra %} 
+
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+		<div class="row">
+			<div class="col-3 ml-auto mt-3">
+				<a href='{% url "novels:list" %}'><button type="button" class="btn btn-info">Cancel</button></a>
+				<button type="submit" name="save" class="btn btn-info">Save</button>
+
+			</div>
+		</div>
+	<div class="container mt-5 pt-5">
+	<div class="row">
+
+			<div class="col-4 mr-auto">
+					
+				{{ form.image|as_crispy_field }}		
+				<a href='{% url "novels:details" id=instance.id %}'><button type="button" class="btn btn-info mt-4">View as reader</button></a>
+			</div>
+			<div class="col-7 ml-auto">
+				<div id="story">
+					<div class="row mb-5">
+						<div class="col-3">
+							<h2><a href='#' onclick="return show('story','content');">Story Details</a></h2>
+						</div>
+						<div class="col-4">
+							<h2><a href='#' onclick="return show('content','story');">Table of Content</a></h2>
+						</div>
+					</div>
+					
+				{{ form|crispy }}
+				</div>
+			
+			
+				<div id="content" style="display: none">
+					<div class="row mb-5">
+						<div class="col-3">
+							<h2><a href='#' onclick="return show('story','content');">Story Details</a></h2>
+						</div>
+						<div class="col-4">
+							<h2><a href='#' onclick="return show('content','story');">Table of Content</a></h2>
+						</div>
+					</div>
+					<div class="row py-2 pl-2">
+						<a href='{% url "chapters:create" id=instance.id %}'><button type="button" class="btn btn-info">+ New chapter</button></a>
+					</div>
+					<hr>
+					{% for chapter in chapters %}
+						<h3><a href='{% url "chapters:update" id=chapter.id %}'>{{ chapter.title }}</a></h3>
+						{% if not chapter.draft %}
+							<h5>Published - {{ chapter.publish }}</h5>
+						{% else %}
+							<h5>Draft - {{ chapter.publish }}</h5>
+						{% endif %}
+						
+						<hr>
+					{% endfor %}
+
+				</div>
+			</div>
+		
+	</div>
+	</div>
+	
+</form>
+
+{% endblock content %}

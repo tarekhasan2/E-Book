@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+<div class="container">
+	<div class="row mt-5">
+		<div class="col-2 mr-auto">
+		{% if request.user == item.user %}
+				<a href='{% url "chapters:update" item.id %}'><button type="button" class="btn btn-info">Edit Chapter</button></a>
+		{% endif %}
+		</div>
+		<div class="col-2 ml-auto">
+			<a href='{% url "novels:list" %}'><h2>Back</h2></a>
+		</div>
+
+	</div>
+	<div class="row">
+		{% if item.image %}
+		<div class="col-12 mr-auto ml-auto mb-3">
+			<div class="col-6 ml-auto mr-auto mt-5 mb-3">
+				<div class="novel_image"><img src="{{ item.image.url }}" class="img-fluid" /></div>
+			</div>
+		</div>
+		
+		{% endif %}
+		
+	</div>
+	<div class="row">
+		<div class="col-4 ml-auto mr-auto mt-4 mb-3">
+			<h1>{{ item.title }}</h1>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-3">
+			<h4>by {{ item.user }}</h4>
+		</div>
+		<div class="col-6">
+			<div class="row">
+				{{ item.content }}
+			</div>
+			<div class="col-7 mt-5 mb-4">
+				{% if next_item %}
+					<a href="{% url 'chapters:details' id=next_item.id %}"><button type="button" class="btn btn-info">Countinue reading next chapter</button></a>
+				{% else %}
+				<h3>To be countinue...</h3>
+				{% endif %}
+			</div>
+			
+
+		</div>
+		
+	</div>
+</div>
+
+
+
+
+{% endblock content %}

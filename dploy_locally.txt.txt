@@ -1,0 +1,42 @@
+Step 1:
+	Download the project
+	Python should install in your pc
+
+Step 2:
+	go to that directory with command prompt.
+
+Step 3:
+
+	run " Scripts\activate "
+	run "cd Ebook"
+
+Step 4:
+	Now migrate database.
+	run " python manage.py makemigrations "
+	run " python manage.py migrate"
+	run " python manage.py migrate --run-syncdb"
+
+Step 5:
+	Now create a super user.
+	run " python manage.py createsuperuser"
+	
+	in command prompt:
+		give a username.
+		Email is optional. no need.
+		give a 8 digit password.
+		comfirm password
+
+Step 6:
+	run " python manage.py runserver"
+
+
+Step 7: 
+	to login admin-panel from browse go to "localhost:8000/admin/"
+	login with you username and password
+	login must.
+
+Step 8:
+	go to "localhost:8000/novels"
+	
+
+Note: If need any update i will change.

@@ -1,0 +1,44 @@
+
+
+
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+ 
+{% block head_extra %}
+	{{ form.media}}
+{% endblock head_extra %} 
+
+{% block content %}
+
+	
+	<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+		<div class="row">
+			<div class="col-3 ml-auto mt-3">
+					
+					<button type="submit" name="publish" class="btn btn-info">Publish</button>
+				<!-- <button type="submit" name="publish" class="open-button" onclick="openForm()">Publish</button> -->
+					<button type="submit" name="save" class="btn btn-info">Save</button>
+					<button type="submit" name= "preview"class="btn btn-info">Preview</button>
+			
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-2 ml-auto mr-auto">
+				{{ form.image|as_crispy_field }}
+				
+			</div>
+		</div>
+		<div class="container">
+			<div class="col-7 ml-auto mr-auto">
+				{{ form.title|as_crispy_field }}
+				{{ form.content|as_crispy_field }}
+
+			</div>
+		</div>
+		
+		
+				
+	</form>
+
+{% endblock content %}
