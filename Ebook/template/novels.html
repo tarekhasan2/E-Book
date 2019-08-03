@@ -2,27 +2,31 @@
 
 
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 
-<div class="container"> 
+<div class="container">
+
 	<div class="row mt-5">
 		<div class="col-3 mr-auto pt-5 pb-5">
-			<h1>My Novels</h1>
+			<h1 style="font-weight: 700;">My Novels</h1>
 		</div>
 		<div class="col-4 ml-auto pt-5 pb-5">
-			<a href='{% url "novels:create" %}' id="create_button"><button type="button" class="btn btn-primary btn-sm" style="font-size: 19px;"> + New Novel</button></a>
+			<a href='{% url "novels:create" %}' id="create_button"><button type="button" class="btn btn-info btn-sm" style="font-size: 19px;"> + New Novel</button></a>
 		</div>
+		
 	</div>
-	<div class="row">
-		<div id="all-novel">
+	
+	<div class="row" id="novels">
+		<div class="all-novel col-10 mr-auto">
 			<div id="publish">
 		
 				<div class="row">
-					<div class="col-3">
-						<h3><a href='#' onclick="return show('publish','draft');">Publish</a></h3>
+					<div class="col-3 pt-3">
+						<h3 id="nav-item"><a href='#' class="nav-link1" onclick="return show('publish','draft');">Publish</a></h3>
 					</div>
-					<div class="col-3">
-						<h3><a href='#' onclick="return show('draft','publish');">Draft</a></h3>
+					<div class="col-3 pt-3">
+						<h3 id="nav-item"><a href='#' class="nav-link1" onclick="return show('draft','publish');">Draft</a></h3>
 					</div>
 				</div>
 			
@@ -30,85 +34,138 @@
 			<hr>
 			
 			{% for novel in query_set %}
-				{% if not novel.draft %}
-				<div class="row mb-5 mt-5" >
+				
+				{% if novel.drafted is not True %}
+				<div class="novel">
+				<div class="row mb-5">
 						<div class="col-2">
 							{% if novel.image %}
-								<div class="novel_image"><img src="{{ novel.image.url }}" class="img-fluid" /></div>
+							<div class="novel_image"><img src="{{ novel.image.url }}" class="img-fluid" style="width:250px; height:180px;"/></div>
+							
 							{% endif %}
-
-
 						</div>
-						<div class="col-3">
+						<div class="col-4">
 							<div class="novel_body ">
 								
-								<h2><a href="{% url 'novels:update_content' id=novel.id%}">{{ novel.title }}</a></h2>
-
-								<h5>{{ novel.updated }}</h5></div>
+								<h4><a href="{% url 'novels:update_content' id=novel.id%}"  class="novel-title">{{ novel.title }}</a></h4>
+								<h6>{{ novel.published.count }} publish | {{ novel.draft.count }} draft</h6>
+								<h5>{{ novel.updated }}</h5>
+							</div>
 								<div class="novel_text">
-								<!-- <p>{{novel.get_markdown | truncatechars_html:200}}</p> -->
+								 <!-- <p>{{novel.get_markdown | truncatechars_html:200}}</p>  -->
 								
 								</div>
 						</div>
 						<div class="col-5 ml-auto">
-							<a href='{% url "chapters:create" id=novel.id %}' id="create_button"><button type="button" class="btn btn-primary btn-sm" style="font-size: 19px;"> Countinue writhing</button></a>
-				
-							<a href='{% url "novels:delete" id=novel.id %}' id="create_button"><button type="button" class="btn btn-primary btn-sm" style="font-size: 19px;"> Delete Novel</button></a>
-
+						<div class="row">
+							<div class="dropdown">
+    							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Countinue writhing</button>
+    							
+    							<div class="dropdown-menu">
+    								{% for chapter in novel.children %}
+      									<a class="dropdown-item" href='{% url "chapters:update" id=chapter.id %}'>{{ chapter.title }}</a>
+      								{% endfor %}
+      								<div class="dropdown-divider"></div> 
+      									<a class="dropdown-item" href='{% url "chapters:create" id=novel.id %}'>Add Chapter</a>	
+					    		</div>
+					    	
+  							</div>
+  						</div>
+  						<div class="row">
+  							<div class="dropdown">											
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i></button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href='{% url "novels:details" id=novel.id %}'>View as reader</a>	
+      								<div class="dropdown-divider"></div>
+    								<a class="dropdown-item" href='{% url "novels:unpublish" id=novel.id %}'>Unpublish</a>	
+      								<div class="dropdown-divider"></div> 
+      								<a class="dropdown-item" id="myBtn" href='{% url "novels:delete" id=novel.id %}'>Delete Novel</a>
+					    		</div>
+							</div>
 						</div>
+					</div>
 				</div>
-
-				{% endif %}
-			
+				</div>
+				<hr>
+			{% endif %}
 			{% endfor %}
-		</div>
+			</div>
 
 
-
-
+	
 			<div id="draft" style="display: none;">
 				<div class="row">
-					<div class="col-3">
-						<h3><a href='#' onclick="return show('publish','draft');">Publish</a></button></h3>
+					<div class="col-3 pt-3">
+						<h3 id="nav-item"><a href='#' class="nav-link1" onclick="return show('publish','draft');">Publish</a></button></h3>
 					</div>
-					<div class="col-3">
-						<h3><a href='#' onclick="return show('draft','publish');">Draft</a></h3>
+					<div class="col-3 pt-3">
+						<h3 id="nav-item"><a href='#' class="nav-link1" onclick="return show('draft','publish');">Draft</a></h3>
 					</div>
 				</div>
 
 			<hr>
 			{% for novel in query_set %}
-				{% if novel.draft %}
-				<div class="row mb-5 mt-5" >
+				{% if novel.drafted is True %}
+				<div class="novel">
+					<div class="row h-60 mb-5 mt-3">
 						<div class="col-2">
 							{% if novel.image %}
-							<div class="novel_image"><img src="{{ novel.image.url }}" class="img-fluid" /></div>
+							<div class="novel_image"><img src="{{ novel.image.url }}" class="img-fluid" style="width:250px; height:180px;" /></div>
+							
 							{% endif %}
-
 						</div>
 						<div class="col-4">
 							<div class="novel_body ">
-								<h2><a href="{% url 'novels:update_content' id=novel.id%}">{{ novel.title }}</a></h2>
+								<h4><a href="{% url 'novels:update_content' id=novel.id%}"  class="novel-title">{{ novel.title }}</a></h4>
+								<h6>{{ novel.published.count }} publish | {{ novel.draft.count }} draft</h6>
+
 								<h5>{{ novel.updated }}</h5>
 								<div class="novel_text">
-								<!-- <p>{{novel.get_markdown | truncatechars_html:200}}</p> -->
+								<!-- <p>{{novel.get_markdown | truncatechars_html:200}}</p>  -->
 								
 								</div>
 							</div>
 						</div>
 						<div class="col-5 ml-auto">
-							<a href='{% url "chapters:create" id=novel.id %}' id="create_button"><button type="button" class="btn btn-primary btn-sm" style="font-size: 19px;"> Countinue writhing</button></a>
-
-							<a href='{% url "novels:delete" id=novel.id %}' id="create_button"><button type="button" class="btn btn-primary btn-sm" style="font-size: 19px;"> Delete Novel</button></a>
-
+							<div class="row">
+							<div class="dropdown">
+    							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Countinue writhing</button>
+    							
+    							<div class="dropdown-menu">
+    								{% for chapter in novel.children %}
+      									<a class="dropdown-item" href='{% url "chapters:update" id=chapter.id %}'>{{ chapter.title }}</a>
+      								{% endfor %}
+      								<div class="dropdown-divider"></div> 
+      								<a class="dropdown-item" href='{% url "chapters:create" id=novel.id %}'>Add Chapter</a>
+					    		</div>
+					    	
+  							</div>
+  							</div>
+  						<div class="row">
+  							<div class="dropdown">											
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i></button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href='{% url "novels:details" id=novel.id %}'>View as reader</a>	
+      									
+      								<div class="dropdown-divider"></div> 
+      								<a class="dropdown-item" id="myBtn" href='{% url "novels:delete" id=novel.id %}'>Delete Novel</a>
+      								
+					    		</div>
+							</div>
+						</div>
+						</div>
+				
+				
+				
 						</div>
 				</div>
+				<hr>
 				{% endif %}
-
 			{% endfor %}	
-		</div>
+			</div>
 		</div>
 	</div>
+
 </div>
 
 {% endblock content %}

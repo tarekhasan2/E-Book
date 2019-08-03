@@ -1,13 +1,10 @@
 
-
-
-
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
  
 {% block head_extra %}
 	{{ form.media}}
-{% endblock head_extra %} 
+{% endblock head_extra %}
 
 {% block content %}
 
@@ -21,7 +18,8 @@
 				{% else %}
 					
 					<button type="submit" name="publish" class="btn btn-info">Publish</button>
-				<!-- <button type="submit" name="publish" class="open-button" onclick="openForm()">Publish</button> -->
+				<!-- <button type="submit" name="publish" class="open-button"
+					onclick="openForm()">Publish</button> -->
 					<button type="submit" name="save" class="btn btn-info">Save</button>
 					<button type="submit" name= "preview"class="btn btn-info">Preview</button>
 				
@@ -31,6 +29,7 @@
 		<hr>
 		<div class="row">
 			<div class="col-2 ml-auto mr-auto">
+				<img src="#" id="blah" alt="my image" width="280" height="420">
 				{{ form.image|as_crispy_field }}
 			</div>
 		</div>

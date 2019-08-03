@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from . import settings
+from novels import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name = 'home'),
+
 	path('novels/', include("novels.urls", namespace = "novels")),
     path('novels/', include("chapters.urls", namespace = "chapters")),
   

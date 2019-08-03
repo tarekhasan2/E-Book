@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+	<div class="row">
+
+		<div class="col-6 mr-auto ml-auto sm-2 md-4">
+			<div>
+				<h2 class="py-3">Are you sure you want to unpublish this Novel?</h2>
+				
+				<form action="" method="POST"> {% csrf_token %}
+					<input type="submit" name="unpublish" value="Unpublish" />
+					<a href='{% url "novels:list" %}'>Cancel</a>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

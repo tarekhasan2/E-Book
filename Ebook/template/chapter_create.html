@@ -16,19 +16,17 @@
 			<div class="col-3 ml-auto mt-3">
 					
 					<button type="submit" name="publish" class="btn btn-info">Publish</button>
+					<!-- <button class="btn btn-info" id="open-popup-1">Publish</button> -->
 				<!-- <button type="submit" name="publish" class="open-button" onclick="openForm()">Publish</button> -->
 					<button type="submit" name="save" class="btn btn-info">Save</button>
 					<button type="submit" name= "preview"class="btn btn-info">Preview</button>
-			
+
+
 			</div>
 		</div>
+	
 		<hr>
-		<div class="row">
-			<div class="col-2 ml-auto mr-auto">
-				{{ form.image|as_crispy_field }}
-				
-			</div>
-		</div>
+
 		<div class="container">
 			<div class="col-7 ml-auto mr-auto">
 				{{ form.title|as_crispy_field }}
@@ -40,5 +38,28 @@
 		
 				
 	</form>
+
+
+
+
+
+
+<div id="popup-1">
+	<div class="popup-content">
+		<h3>sss</h3>
+		<button id="close-popup-1">Close</button>
+	</div>
+</div>
+
+<div class="main-site">
+	<h1>Webpage</h1>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<button type="text" id="open-popup-1">Open Popup</button>
+
 
 {% endblock content %}

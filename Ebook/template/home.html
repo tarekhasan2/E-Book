@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="container">
+	<div class="row mt-5">
+		<div class="col-3 mr-auto pt-5 pb-5 mb-5">
+			<h1>All Novels</h1>
+		</div>
+
+	</div>
+
+	<div class="row">
+
+		{% for novel in query_set %}
+			<div class="col-4 mb-5 mt-5">
+				<div class="row">
+					<div class="col-5">
+							{% if novel.image %}
+								<div class="novel_image"><img src="{{ novel.image.url }}" class="img-fluid" style="width:350px; height:220px;" /></div>
+							{% endif %}
+					</div>
+					<div class="col-6">
+						<div class="novel_body ">
+						<h3><a href="{% url 'novels:update_content' id=novel.id%}">{{ novel.title }}</a></h3>
+						<h5>{{ novel.updated }}</h5></div>
+						<h6>by {{ novel.user }}</h6>
+						<div class="novel_text">
+								<p>{{novel.get_markdown | truncatechars_html:200}}</p>
+								
+						</div>
+					</div>
+				</div>	
+			</div>
+		{% endfor %}
+	</div>	
+</div>
+
+
+
+{% endblock content %}

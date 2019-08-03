@@ -11,29 +11,31 @@
 
 {% block content %}
 
-<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+<form method="POST" enctype="multipart/form-data" runat="server">{% csrf_token %}
 		<div class="row">
 			<div class="col-2 ml-auto mt-4">
 				<a href='{% url "novels:list" %}'><button type="button" class="btn btn-info">Cancel</button></a>
-				<button type="submit" name="skip" value="Skip" class="btn btn-info">Skip</button>
+				<button type="submit" name="skip" value="Skip" class="btn btn-info">Save</button>
 
 			</div>
 		</div>
 		<hr>
 
 		<div class="container">
-
-			<div class="form-row mt-5 ">
-				<div class="form-group col-4 mr-auto mt-5">
-					
-						{{ form.image|as_crispy_field }}
-					
+			<div class="form-row mt-3">
+				<div class="form-group col-3 mt-5">
+					<img src="#" id="blah" alt="my image" width="280" height="420">
+					{{ form.image|as_crispy_field }}
+						
 				</div>
-				<div class="form-group col-8 ml-auto mt-5">
-					
+				<div class="form-group col-9 ml-auto mt-5" id="form-without-img">
+					<h2 style="text-align: bold;" class="py-2 pr-3">Novel Details</h2>
+					<hr>
+					<div class="col-11 mr-auto ml-auto">
 						{{ form.title|as_crispy_field }}
 						{{ form.description|as_crispy_field }}
-					<div class="form-group col-3">
+					</div>
+					<div class="form-group col-3 pl-3 ">
 						{{ form.tags|as_crispy_field }}
 
 					</div>
@@ -64,7 +66,8 @@
 				</div>
 
 			</div>
-
+		</div>
+	
 </form>
 
 	

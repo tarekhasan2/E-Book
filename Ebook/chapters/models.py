@@ -15,12 +15,11 @@ class Chapter(models.Model):
 	user 		= models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=True)
 	title 		= models.CharField(max_length=120)
 	content		= models.TextField()
-	image 		= models.ImageField(upload_to = uploded_location, null=True, blank=True)
 	timestamp 	= models.DateTimeField(auto_now=False, auto_now_add=True)
 	updated 	= models.DateTimeField(auto_now=True, auto_now_add=False)
 	parent 		= models.IntegerField(null=True, blank=True)
 	draft 		= models.BooleanField(default=True)
-	video		= models.URLField(max_length=250)
+
 
 
 	def __unicode__(self):
@@ -44,8 +43,7 @@ class Chapter(models.Model):
 		return reverse("chapters:details" , kwargs={"id":self.id})
 	
 
-
-	
+		
 	# def next_chapter(self):
 	# 	title = self.title
 	# 	next_ = Chapter.objects.filter(title=title, id__gt=self.id).order_by('id').first()

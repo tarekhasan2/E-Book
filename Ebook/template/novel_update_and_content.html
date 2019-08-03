@@ -1,7 +1,4 @@
 
-
-
-
 {% extends "base.html" %}
 
 {% load crispy_forms_tags %}
@@ -22,9 +19,8 @@
 		</div>
 	<div class="container mt-5 pt-5">
 	<div class="row">
-
 			<div class="col-4 mr-auto">
-					
+				<img src="{{ instance.image.url }}" id="blah" alt="my image" width="280" height="420">
 				{{ form.image|as_crispy_field }}		
 				<a href='{% url "novels:details" id=instance.id %}'><button type="button" class="btn btn-info mt-4">View as reader</button></a>
 			</div>
@@ -39,7 +35,14 @@
 						</div>
 					</div>
 					
-				{{ form|crispy }}
+				{{ form.title|as_crispy_field }}
+				{{ form.description|as_crispy_field }}
+				{{ form.tags|as_crispy_field }}
+				{{ form.genre|as_crispy_field }}
+				{{ form.audience|as_crispy_field }}
+				{{ form.lenguage|as_crispy_field }}
+				{{ form.copyringt|as_crispy_field }}
+				{{ form.publish|as_crispy_field }}
 				</div>
 			
 			
@@ -57,13 +60,26 @@
 					</div>
 					<hr>
 					{% for chapter in chapters %}
+						<div class="col mr-auto">
 						<h3><a href='{% url "chapters:update" id=chapter.id %}'>{{ chapter.title }}</a></h3>
 						{% if not chapter.draft %}
-							<h5>Published - {{ chapter.publish }}</h5>
+							<h6>Published</h6>
 						{% else %}
-							<h5>Draft - {{ chapter.publish }}</h5>
+							<h6>Draft</h6>
 						{% endif %}
-						
+						</div>
+						<div class="col ml-auto" >
+  							<div class="dropdown">											
+								<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i></button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href='{% url "chapters:details" id=chapter.id %}'>View as reader</a>	
+      									
+      								<div class="dropdown-divider"></div> 
+      								<a class="dropdown-item" id="myBtn" href='{% url "chapters:delete" id=chapter.id %}'>Delete Chapter</a>
+      								
+					    		</div>
+							</div>
+						</div>			
 						<hr>
 					{% endfor %}
 

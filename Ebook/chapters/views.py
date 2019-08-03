@@ -3,7 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Chapter 
 from .forms import ChapterForm
+from novels.models import Novel
 #from .models import get_id
+
 from urllib.parse import urlparse, parse_qs
 
 # Create your views here.
@@ -39,12 +41,10 @@ def chapter_details(request, id = None):
 	}
 	return render (request, "chapter_details.html", context)
 
-def chapter_create(request, id = None):
+def chapter_create(request, id=None):
 	form = ChapterForm(request.POST or None, request.FILES or None)
-	#last_ = Chapter.objects.last()
-	#instance =get_object_or_404(Chapter, id=id)
-	#id_ = last_.id+1
-	if 'publish' in request.POST:
+	novel = get_object_or_404(Novel, id=id)
+	if request.method=='POST' and 'publish' in request.POST:
 		if form.is_valid():
 			# data = form.cleaned_data
 			# title = data['title']
@@ -57,9 +57,11 @@ def chapter_create(request, id = None):
 			#instance.id = id_
 			instance.parent = id
 			instance.save()
+			novel.drafted=False
+			novel.save()
 			#messages.success(request, "Seccessfully Created")
-			return redirect("novels:update", id=id)
-	elif 'save' in request.POST:
+			return redirect("chapters:details", id=instance.id)
+	elif request.method=='POST' and 'save' in request.POST:
 		if form.is_valid():
 			instance = form.save(commit=False)
 			instance.draft = True
@@ -67,8 +69,8 @@ def chapter_create(request, id = None):
 			instance.parent = id
 			instance.save()
 			#messages.success(request, "Seccessfully Created")
-			return redirect("chapters:update", id=instance.id)
-	elif 'preview' in request.POST:
+			return redirect("chapters:details", id=instance.id)
+	elif request.method=='POST' and 'preview' in request.POST:
 		if form.is_valid():
 			data = form.cleaned_data
 			title = data['title']
@@ -91,11 +93,9 @@ def chapter_create(request, id = None):
 	
 	return render (request, "chapter_create.html", context)
 
-def chapter_update(request, id = None, new_chap=None):
-
-
-	print("aaaurru")
-	instance =get_object_or_404(Chapter, id=id)
+def chapter_update(request, id = None):
+	instance  = get_object_or_404(Chapter, id=id)
+	novel = get_object_or_404(Novel, id=instance.parent)
 	form = ChapterForm(request.POST or None, request.FILES or None, instance=instance)
 	if 'publish' in request.POST:
 		if form.is_valid():
@@ -104,8 +104,10 @@ def chapter_update(request, id = None, new_chap=None):
 			#instance.parent = id
 			instance.draft = False
 			instance.save()
+			novel.drafted = False
+			novel.save()
 			#messages.success(request, "Seccessfully Created")
-			return redirect("novels:update", id= instance.parent)
+			return redirect("chapters:details", id= instance.id)
 	elif 'save' in request.POST:
 		if form.is_valid():
 			instance = form.save(commit=False)
@@ -114,7 +116,7 @@ def chapter_update(request, id = None, new_chap=None):
 			#instance.parent = id
 			instance.save()
 			#messages.success(request, "Seccessfully Created")
-			return redirect("chapters:update", id=instance.id)
+			return redirect("chapters:details", id=instance.id)
 	elif 'preview' in request.POST:
 		if form.is_valid():
 			data = form.cleaned_data
@@ -133,7 +135,6 @@ def chapter_update(request, id = None, new_chap=None):
 	elif 'publish_change' in request.POST:
 		if form.is_valid():
 			instance = form.save(commit=False)
-			instance.user = request.user
 			instance.draft = False
 			#instance.parent = id
 			instance.save()
@@ -154,7 +155,7 @@ def chapter_delete(request, id = None):
 	if request.POST:
 		item.delete()
 
-		return redirect("novels:list" , id = item.parent)
+		return redirect("novels:list")
 	context = {
 		"item":item
 	}

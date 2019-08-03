@@ -7,14 +7,24 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script> -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://kit.font-awesome.com/10f56c1271.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!-- 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 -->
+
+
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
 	
 
@@ -27,8 +37,44 @@
 </head>
 
 <body>
-	
 
+	<nav class="navbar navbar-expand-sm sticky-top" style="background-color: #EBF8F4;">
+
+<!-- Links -->
+      <ul class="navbar-nav">
+        <li class="active">
+            <a class="nav-link" href='{% url "home" %}'>Home</a>
+        </li>
+        <li class="">
+          <a class="nav-link" href='{% url "novels:list" %}'>Novels</a>
+        </li>
+        <li class="">
+            <a class="nav-link" href='#'>Blog</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item dropdown mr-2">
+        	<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ request.user }}</a>
+        		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          			<a class="dropdown-item" href="#">My profile</a>
+          			<a class="dropdown-item" href='{% url "novels:list" %}'>My novels</a>
+          			<a class="dropdown-item" href="#">Create a new novel</a>
+          		<div class="dropdown-divider"></div>
+          			<a class="dropdown-item" href="#">Logout</a>
+        		</div>
+      	</li>
+          
+        {% else %}
+          <li class="">
+            <a class="nav-link" href='#'>Login</a>
+          </li>
+          <li class="">
+            <a class="nav-link" href='#'>Register</a>
+          </li>
+
+        {% endif %}
+      </ul>
+
+    </nav> 
 	{% block content %}  {% endblock content %}
   	<script src="/static/js/bootstrap-tagsinput.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -39,6 +85,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.6.2/marked.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 
 	<script>
 	function show(shown, hidden) {
@@ -47,6 +95,83 @@
 		return false
 	}
 	</script>
+
+
+	<script>
+		function readURL(input) {
+  			if (input.files && input.files[0]) {
+    			var reader = new FileReader();
+    
+    			reader.onload = function(e) {
+      				$('#blah').attr('src', e.target.result);
+    			}
+       			reader.readAsDataURL(input.files[0]);
+  			}
+  			else {
+  				var reader = new FileReader();
+    
+    			reader.onload = function(e) {
+      				$('#blah').attr('src', e.target.result);
+    			}
+       			reader.readAsDataURL(input.files[0]);
+  			}
+		}
+
+		$("#imgInp").change(function() {
+  			readURL(this);
+		});
+
+
+	</script>
+	<!-- <script>
+		$.ajax('{% url "novels:list" %}', {
+    		method: 'POST',
+    		success: function() {
+       	 	window.location.reload();
+    		},
+		});
+	</script> -->
+
+
+	<!-- <script>
+		$(document).ready(function(){
+  			$("#myBtn").click(function(){
+   			$("#myModal").modal();
+  		});
+	});
+</script> -->
+
+
+<!-- <script type="">
+
+	var popup1 = document.getElementById("popup-1")
+	var openPopup1 = document.getElementById("open-popup-1")
+	var closePopup1 = document.getElementById('close-popup-1')
+
+	openPopup1.addEventListener('click', () => {
+		popup1.style.display = "block";
+	})
+
+	closePopup1.addEventListener('click', () => {
+		popup1.style.display = "none";
+	})
+</script> -->
+
+
+	<!-- <script type="text/javascript">
+		function upload_img(input) {
+			if (input.files && input.files[0]){
+				var reader = new FileReader();
+				reader.onload = function (e){
+					$('#img_id').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+		}
+
+
+	</script> -->
+
+
 
 
 	<!-- <script>
