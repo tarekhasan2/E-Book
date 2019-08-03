@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'novels',
     'markdown_deux',
     'crispy_forms',
+    'pagedown',
     'chapters',
     'taggit',
     'django_extensions',

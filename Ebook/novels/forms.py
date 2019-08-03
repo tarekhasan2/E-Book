@@ -11,8 +11,8 @@ from html.parser import HTMLParser
 
 
 class NovelCreate(forms.ModelForm):
+	
 	publish = forms.DateField(widget=forms.SelectDateWidget)
-
 	# def __init__(self,*args, **kwargs):
 	# 	super(NovelCreate, self).__init__(data=None, *args, **kwargs)
 

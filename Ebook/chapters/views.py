@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Chapter 
 from .forms import ChapterForm
+from markdown_deux import markdown
 from novels.models import Novel
 #from .models import get_id
 
@@ -75,13 +76,14 @@ def chapter_create(request, id=None):
 			data = form.cleaned_data
 			title = data['title']
 			content = data['content']
-			image = data['image']
+			context = markdown(content)
+		
 			user = request.user
 			#messages.success(request, "Seccessfully Created")
 			context1 = {
 				"title" : title,
-				"content" : content,
-				"image" : image
+				"content" : context,
+				
 
 			}
 			return render(request, "preview.html", context1)

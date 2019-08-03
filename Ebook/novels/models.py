@@ -32,17 +32,12 @@ GENRE_STATUS_CHOICES = (
 		('werewolf', 'Werewolf'),
 
 	)
-ORDER_STATUS_CHOICES = (
-		('created', 'Created'),
-		('paid', 'Paid'),
-		('shipped', 'Shipped'),
-		('refunded', 'Refunded'),
-	)
+
 AUDIENCE_STATUS_CHOICES = (
-		('created', 'Created'),
-		('paid', 'Paid'),
-		('shipped', 'Shipped'),
-		('refunded', 'Refunded'),
+		('primary', 'Who is your primary audience?'),
+		('middle', 'Middle Grade (8-13 years of age)'),
+		('young', 'Young Adult(13-18 years of age)'),
+		('adult', 'Adult(25+ years of age)'),
 	)
 LENGUAGE_STATUS_CHOICES = (
 		('created', 'Created'),
@@ -53,10 +48,9 @@ LENGUAGE_STATUS_CHOICES = (
 
 
 COPYRIGHT_STATUS_CHOICES = (
-		('created', 'Created'),
-		('paid', 'Paid'),
-		('shipped', 'Shipped'),
-		('refunded', 'Refunded'),
+		('not_specified', 'Not Specified'),
+		('reserved', 'All Right Reserved'),
+		
 	)
 
 
@@ -75,13 +69,13 @@ class Novel(models.Model):
 	image 		= models.FileField(upload_to = uploded_location, null=True, blank=True)
 	description = models.TextField()
 	genre		= models.CharField(max_length=120, default='select a genre', choices= GENRE_STATUS_CHOICES)
-	audience	= models.CharField(max_length=120, default='created', choices= AUDIENCE_STATUS_CHOICES)
+	audience	= models.CharField(max_length=120, default='primary', choices= AUDIENCE_STATUS_CHOICES)
 	lenguage	= models.CharField(max_length=120, default='created', choices= LENGUAGE_STATUS_CHOICES)
-	copyringt	= models.CharField(max_length=120, default='created', choices= COPYRIGHT_STATUS_CHOICES)
+	copyringt	= models.CharField(max_length=120, default='not_specified', choices= COPYRIGHT_STATUS_CHOICES)
 	drafted 	= models.BooleanField(default=True)
-	publish 	= models.DateField(auto_now=False, auto_now_add=False)
 	timestamp 	= models.DateTimeField(auto_now=False, auto_now_add=True)
 	updated 	= models.DateTimeField(auto_now=True, auto_now_add=False)
+	publish 	= models.DateField(auto_now=False, auto_now_add= False)
 	tags		= TaggableManager()
 	rate 		= models.CharField(max_length=120, default='Untaiteld')
 	
