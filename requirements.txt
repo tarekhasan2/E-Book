@@ -10,7 +10,7 @@ django-extensions==2.1.9
 django-markdown-deux==1.0.5
 django-pagedown==1.0.6
 django-taggit==1.1.0
-djangorestframework==3.9.4
+djangorestframework==3.11.2
 get==2019.4.13
 idna==2.8
 itsdangerous==1.1.0
