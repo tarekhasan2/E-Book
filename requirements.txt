@@ -36,7 +36,7 @@ six==1.12.0
 social-auth-app-django==3.1.0
 social-auth-core==3.1.0
 soupsieve==1.9.2
-urllib3==1.25.3
+urllib3==1.26.5
 virtualenv==16.4.0
 Werkzeug==0.15.4
 whitenoise==4.1.2
